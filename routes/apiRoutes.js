@@ -20,41 +20,30 @@ router.get("/api/workouts", (req, res) => {
 });
 
 // POST a new workout
-router.post("/api/workouts", async (req, res) => {
-        try {
-            const response = await db.Workout.create({type: "workout"});
-            res.json(response);
-        }
-        catch(err) {
-            console.log("There was an error when creating a workout: ", err)
-        }
+router.post("/api/workouts", ({ body }, res) => {
+    db.Workout.create(body)
+        .then((dbWorkout => {
+        res.json(dbWorkout);
+    })).catch(err => {
+        res.json(err);
+    })
 });
 
-    // PUT, or update, by adding an exercise to a workout
-    app.put("/api/workout/:id", ({body, params}, res) => {
-        const workoutId = params.id;
-        let savedExercises = [];
+// PUT, or update, by adding an exercise to a workout
+router.put("/api/workout/:id", (req, res) => {
 
-        db.Workout.find({_id: workoutId})
-            .then(dbWorkout => {
-                savedExercises = dbWorkout[0].exercises;
-                res.json(dbWorkout[0].exercises);
-                let allExercises = [...savedExercises, body];
-                console.log(allExercises);
-                updateWorkouts(allExercises);
-            })
-            .catch (err => {
-                res.json(err);
-            });
-
-        function updateWorkouts(exercises) {
-            db.Workout.findByIdAndUpdate(workoutId, {exercises: exercises}, function(err, doc){
-                if(err) {
-                    console.log(err)
-                }
-            })
-        }
-    })
+    db.Workout.findOneAndUpdate(
+        { _id: req.params.id },
+        {
+            $inc: { totalDuration: req.body.duration },
+            $push: { exercises: req.body }
+        }, 
+        { new: true }).then(dbWorkout => {
+            res.json(dbWorkout);
+        }).catch(err => {
+            res.json(err);
+        });
+});
 
     // GET workouts by range
     app.get("/api/workouts/range", (req, res) => {
@@ -66,4 +55,3 @@ router.post("/api/workouts", async (req, res) => {
             res.json(err);
         });
     });
-}
