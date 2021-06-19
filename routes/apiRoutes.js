@@ -45,11 +45,11 @@ router.put("/api/workout/:id", (req, res) => {
         });
 });
 
-    // GET workouts by range
-    app.get("/api/workouts/range", (req, res) => {
+// GET workouts by range
+router.get("/api/workouts/range", (req, res) => {
         db.Workout.find({})
-        .then(workout => {
-            res.json(workout);
+        .then(dbWorkout => {
+            res.json(dbWorkout);
         })
         .catch(err => {
             res.json(err);
