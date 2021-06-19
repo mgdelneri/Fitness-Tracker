@@ -1,20 +1,26 @@
-var db = require("../models");
+const db = require("../models");
+const router = require("express").Router();
 
-module.exports = function(app) {
-
-    // GET last workout
-    app.get("/api/workouts", (req, res) => {
+// GET last workout
+router.get("/api/workouts", (req, res) => {
         db.Workout.find({})
-        .then(workout => {
-            res.json(workout);
+        .then(dbWorkout => {
+            dbWorkout.forEach(workout => {
+                var total = 0;
+                workout.exercises.forEach(e => {
+                    total += e.duration;
+                });
+                workout.totalDuration = total;
+            });
+            res.json(dbWorkout);
         })
         .catch(err => {
             res.json(err);
         })
-    });
+});
 
-    // POST a new workout
-    app.post("/api/workouts", async (req, res) => {
+// POST a new workout
+router.post("/api/workouts", async (req, res) => {
         try {
             const response = await db.Workout.create({type: "workout"});
             res.json(response);
@@ -22,7 +28,7 @@ module.exports = function(app) {
         catch(err) {
             console.log("There was an error when creating a workout: ", err)
         }
-    });
+});
 
     // PUT, or update, by adding an exercise to a workout
     app.put("/api/workout/:id", ({body, params}, res) => {
