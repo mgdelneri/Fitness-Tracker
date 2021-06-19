@@ -35,7 +35,7 @@ module.exports = function(app) {
                 res.json(dbWorkout[0].exercises);
                 let allExercises = [...savedExercises, body];
                 console.log(allExercises);
-                updateWorkout(allExercises);
+                updateWorkouts(allExercises);
             })
             .catch (err => {
                 res.json(err);
