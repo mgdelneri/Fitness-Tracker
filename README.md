@@ -4,7 +4,7 @@
 
 The goal of this project was to code the back-end to a Fitness Tracker app. We were provided with the front-end of the code. The assignment required us to create a Mongo database with a Mongoose schema and handle routes with Express. 
 
-Once finalized, the Fitness Tracker app provides the user with a space to view, create, and track daily workouts. The user has to be able to log resistance or cardio exercises in a workout on any given day. The user should also be able to track the name, type, weight, sets, reps, and duration of each exercise. In a cardio exercise, the user can also track the distance travelled. 
+Once finalized, the Fitness Tracker app provides the user with a space to view, create, and track daily workouts. The user has to be able to log resistance or cardio exercises in a workout on any given day. The user should also be able to track the name, type, weight, sets, reps, and duration of each exercise. In a cardio exercise, the user can also track the distance traveled. 
 
 ## PROCESS
 
@@ -22,7 +22,9 @@ Here is a walkthrough-video of the Fitness Tracker app:
 
 ## USAGE
 
-The Fitness-Tracker app is deployed in Heroku under the [Fitness-Tracker Heroku link]().
+The Fitness-Tracker app is deployed in Heroku under the [Fitness-Tracker Heroku link](https://young-atoll-78128.herokuapp.com/).
+
+NOTE: When deploying to Heroku, I encountered a few glitches, the biggest one being that nothing showed up in the Dashboard page. In the browser using localhost, the app worked fine. Other people in class had a similar issue, so we went through it in class and my Heroku link worked on someone else's computer. If you encounter glitches with the Heroku link, I suggest trying it locally as described below:  
 
 The user can also access the app in VS Code after the Fitness-Tracker repository has been cloned from GitHub. After installing node modules and all of the necessary dependencies, simply seed the database by running "npm run seed" in the Terminal, and then starting the router using "npm run start". This will start the router in localhost:3001 in the user's browser. 
 
